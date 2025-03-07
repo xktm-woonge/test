@@ -28,6 +28,11 @@ stages:
     pool:
       vmImage: $(vmImageName)
     steps:
+    - script: |
+        echo "Checking files in build directory:"
+        ls -R $(Build.SourcesDirectory)
+      displayName: "Debug: List all files in source directory"
+
     - task: Docker@2
       displayName: Build and push an image to container registry
       inputs:
@@ -35,6 +40,6 @@ stages:
         repository: $(imageRepository)
         dockerfile: $(dockerfilePath)
         containerRegistry: $(dockerRegistryServiceConnection)
-        buildContext: $(Build.SourcesDirectory)/shopping
+        buildContext: $(Build.SourcesDirectory)/Shopping
         tags: |
           $(tag)
