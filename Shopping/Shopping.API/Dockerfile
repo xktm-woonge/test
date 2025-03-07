@@ -12,7 +12,7 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Shopping.API/Shopping.API.csproj", "Shopping.API/"]
+COPY ["Shopping/Shopping.API/Shopping.API.csproj", "Shopping.API/"]
 RUN dotnet restore "./Shopping.API/Shopping.API.csproj"
 COPY . .
 WORKDIR "/src/Shopping.API"
