@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35728.132 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopping.Client", "Shopping.Client\Shopping.Client.csproj", "{79A7537B-E6E0-4515-95E9-E17FB8A3FC3C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopping.API", "Shopping.API\Shopping.API.csproj", "{15A2707F-D8AF-4F9D-B1BA-38BE86C88B79}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{212FA3F4-3229-485D-BB7F-C38D066FC953}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{79A7537B-E6E0-4515-95E9-E17FB8A3FC3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79A7537B-E6E0-4515-95E9-E17FB8A3FC3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79A7537B-E6E0-4515-95E9-E17FB8A3FC3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79A7537B-E6E0-4515-95E9-E17FB8A3FC3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15A2707F-D8AF-4F9D-B1BA-38BE86C88B79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15A2707F-D8AF-4F9D-B1BA-38BE86C88B79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15A2707F-D8AF-4F9D-B1BA-38BE86C88B79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15A2707F-D8AF-4F9D-B1BA-38BE86C88B79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{212FA3F4-3229-485D-BB7F-C38D066FC953}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{212FA3F4-3229-485D-BB7F-C38D066FC953}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{212FA3F4-3229-485D-BB7F-C38D066FC953}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{212FA3F4-3229-485D-BB7F-C38D066FC953}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
