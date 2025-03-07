@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: xktmwoongetest 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: xktmwoongetest
+  template:
+    metadata:
+      labels:
+        app: xktmwoongetest 
+    spec:
+      containers:
+        - name: xktmwoongetest 
+          image: shoppingacrta.azurecr.io/xktmwoongetest
+          ports:
+          - containerPort: 8080
