@@ -1,28 +1,29 @@
-# Base 이미지
+# 디버그 컨테이너를 사용자 지정하는 방법과 Visual Studio 이 Dockerfile을 사용하여 더 빠른 디버깅을 위해 이미지를 빌드하는 방법을 알아보려면 https://aka.ms/customizecontainer를 참조하세요.
+
+# 이 스테이지는 VS에서 빠른 모드로 실행할 때 사용됩니다(디버그 구성의 기본값).
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+USER $APP_UID
 WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
 
-# Build 스테이지
+
+# 이 스테이지는 서비스 프로젝트를 빌드하는 데 사용됩니다.
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-
-# Shopping.API.csproj만 먼저 복사 후 restore 실행
-COPY ./Shopping.API.csproj Shopping.API/
-WORKDIR /src/Shopping.API
-RUN dotnet restore "Shopping.API.csproj"
-
-# 전체 프로젝트 복사 및 빌드 실행
+COPY ["Shopping.API/Shopping.API.csproj", "Shopping.API/"]
+RUN dotnet restore "./Shopping.API/Shopping.API.csproj"
 COPY . .
-RUN dotnet build "./Shopping.API/Shopping.API.csproj" -c $BUILD_CONFIGURATION -o /app/build -v d
+WORKDIR "/src/Shopping.API"
+RUN dotnet build "./Shopping.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
-# Publish 스테이지
+# 이 스테이지는 최종 스테이지에 복사할 서비스 프로젝트를 게시하는 데 사용됩니다.
 FROM build AS publish
-RUN dotnet publish "Shopping.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+ARG BUILD_CONFIGURATION=Release
+RUN dotnet publish "./Shopping.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
-# Final 스테이지
+# 이 스테이지는 프로덕션에서 사용되거나 VS에서 일반 모드로 실행할 때 사용됩니다(디버그 구성을 사용하지 않는 경우 기본값).
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
