@@ -9,7 +9,7 @@ resources:
 - repo: self
 
 variables:
-  # Container registry service connection established during pipeline creation
+  # Container registry service connection
   dockerRegistryServiceConnection: '3a4a7db6-3fad-4277-9a50-1f0125e245b6'
   imageRepository: 'shoppingapi'
   containerRegistry: 'shoppingacrta.azurecr.io'
@@ -29,36 +29,44 @@ stages:
       vmImage: $(vmImageName)
     steps:
     
-    # .NET SDK 설치
+    # 1️⃣ .NET SDK 설치
     - task: UseDotNet@2
       displayName: 'Install .NET SDK'
       inputs:
         packageType: 'sdk'
         version: '8.0.x'
-    
-    # CRLF 문제 해결 (git 자동 변환 방지)
+
+    # 2️⃣ `$(Build.SourcesDirectory)` 확인 및 파일 목록 출력
     - script: |
+        echo "Build.SourcesDirectory: $(Build.SourcesDirectory)"
+        ls -l $(Build.SourcesDirectory)/Shopping/Shopping.API/
+      displayName: 'Check Build Sources Directory'
+
+    # 3️⃣ CRLF → LF 변환 (필요한 경우 `dos2unix` 설치)
+    - script: |
+        sudo apt-get update
+        sudo apt-get install -y dos2unix
         git config --global core.autocrlf input
         dos2unix Shopping.API/Shopping.API.csproj
         dos2unix $(dockerfilePath)
       displayName: 'Fix Line Endings'
 
-    # .NET Restore 실행
+    # 4️⃣ .NET Restore 실행
     - script: |
         dotnet restore Shopping.API/Shopping.API.csproj
       displayName: 'Restore .NET dependencies'
     
-    # .NET Build 실행 (빌드 오류 사전 탐지)
+    # 5️⃣ .NET Build 실행 (빌드 오류 사전 탐지, 상세 로그 `-v d` 추가)
     - script: |
-        dotnet build Shopping.API/Shopping.API.csproj -c Release -o $(Build.ArtifactStagingDirectory)/build
+        dotnet build Shopping.API/Shopping.API.csproj -c Release -o $(Build.ArtifactStagingDirectory)/build -v d
       displayName: 'Build .NET project'
 
-    # 권한 문제 해결 (Linux 환경에서)
+    # 6️⃣ 권한 문제 해결 (Linux 환경에서)
     - script: |
-        sudo chmod -R 777 .
+        sudo chmod -R 777 $(Build.SourcesDirectory)
       displayName: 'Fix file permissions'
 
-    # Docker Build & Push 실행
+    # 7️⃣ Docker Build & Push 실행
     - task: Docker@2
       displayName: Build and push an image to container registry
       inputs:
