@@ -16,7 +16,7 @@ COPY ["Shopping.API.csproj", "Shopping.API/"]
 RUN dotnet restore "./Shopping.API/Shopping.API.csproj"
 COPY . .
 WORKDIR "/src/Shopping.API"
-RUN dotnet build "Shopping.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "./Shopping.API/Shopping.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # 이 스테이지는 최종 스테이지에 복사할 서비스 프로젝트를 게시하는 데 사용됩니다.
 FROM build AS publish
