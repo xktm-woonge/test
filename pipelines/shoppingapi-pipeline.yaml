@@ -17,12 +17,12 @@ resources:
 variables:
 
   # Container registry service connection established during pipeline creation
-  dockerRegistryServiceConnection: '5cbb66b4-a3c6-4644-8a5e-c01ad82ead9e'
+  dockerRegistryServiceConnection: 'd58a27d9-1003-45b6-b705-d910784c772f'
   imageRepository: 'shoppingapi'
   containerRegistry: 'shoppingacrta.azurecr.io'
   dockerfilePath: 'Shopping/Shopping.API/Dockerfile'
   tag: '$(Build.BuildId)'
-  imagePullSecret: 'shoppingacrta1578c98e-auth'
+  imagePullSecret: 'shoppingacrta105984e6-auth'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
@@ -60,7 +60,7 @@ stages:
     displayName: Deploy
     pool:
       vmImage: $(vmImageName)
-    environment: 'xktmwoongetest.default'
+    environment: 'xktmwoongetest-9555.default'
     strategy:
       runOnce:
         deploy:
